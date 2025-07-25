@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat to DB (n8n Webhook)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    h2 { text-align: center; }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      height: 100px;
+      margin-top: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #response {
+      margin-top: 20px;
+      background: #f4f4f4;
+      border: 1px solid #ccc;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Ask Your Database</h2>
+
+  <form id="chatForm">
+    <label for="message">Your Query:</label>
+    <textarea id="message" required placeholder="e.g. find stored procedure with emp_hrutvij table in it"></textarea>
+    <button type="submit">Send</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script>
+    document.getElementById('chatForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const userMessage = document.getElementById('message').value;
+
+      try {
+        const res = await fetch("http://localhost:5678/webhook-test/chat-to-db", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage })
+        });
+
+        const data = await res.json();
+        document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById('response').textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>
