@@ -61,7 +61,7 @@
       responseDiv.innerHTML = 'Loading...';
 
       try {
-        const res = await fetch("http://localhost:5678/webhook/chat-to-db", {
+        const res = await fetch("https://ae74a5f6939b.ngrok-free.app/webhook/chat-to-db", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message })
