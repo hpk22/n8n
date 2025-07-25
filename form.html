@@ -51,7 +51,7 @@
       const userMessage = document.getElementById('message').value;
 
       try {
-        const res = await fetch("http://localhost:5678/webhook-test/chat-to-db", {
+        const res = await fetch("http://localhost:5678/webhook/chat-to-db", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: userMessage })
